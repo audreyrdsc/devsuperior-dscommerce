@@ -36,18 +36,30 @@ public class ProductService {
     @Transactional
     public ProductDTO insert(ProductDTO dto) {
         Product entity = new Product(); //Converter de DTO para Entity
-        entity.setName(dto.getName());
-        entity.setDescription(dto.getDescription());
-        entity.setPrice(dto.getPrice());
-        entity.setImgUrl(dto.getImgUrl());
-
+        copyDtoToEntity(dto, entity); //metodo auxiliar para evitar repetição de código
         entity = productRepository.save(entity);
-
         return new ProductDTO(entity); //reconverter para DTO
 
     }
 
-    /* Antes do PAGE
+    @Transactional
+    public ProductDTO update(Long id, ProductDTO dto) {
+        Product entity = productRepository.getReferenceById(id); //Instanciar um novo produto pela referência do Id
+        copyDtoToEntity(dto, entity);
+        entity = productRepository.save(entity);
+        return new ProductDTO(entity); //reconverter para DTO
+    }
+
+    private void copyDtoToEntity(ProductDTO dto, Product entity) {
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        entity.setPrice(dto.getPrice());
+        entity.setImgUrl(dto.getImgUrl());
+    }
+
+}
+
+/* Antes do PAGE
     @Transactional(readOnly = true)
     public List<ProductDTO> findAll() {
         List<Product> result = productRepository.findAll();
@@ -61,5 +73,3 @@ public class ProductService {
         return new ProductDTO(product);
     }
      */
-
-}
