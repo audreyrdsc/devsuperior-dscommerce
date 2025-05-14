@@ -1,8 +1,8 @@
 package com.devsuperior.dscommerce.services.exceptions;
 
-public class ResourceNotFoundException extends RuntimeException { //quando algum recurso não for encontrado
+public class DatabaseException extends RuntimeException { //quando algum recurso não for encontrado
                                                                   //RuntimeException não exige Try Catch
-    public ResourceNotFoundException(String msg) {
+    public DatabaseException(String msg) {
         super(msg);
     }
 
